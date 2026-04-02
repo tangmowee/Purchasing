@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procurement Report — Jan–Feb 2026 | Purchasing Department</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Inter:wght@300;400;600;700;800&display=swap');
+
+  :root {
+    --navy: #1A1A1A;
+    --ice: #F97316;
+    --accent: #F97316;
+    --white: #FFFFFF;
+    --light-bg: #F5F5F5;
+    --text-dark: #111111;
+    --text-mid: #4a4a4a;
+    --text-light: #737373;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --gold: #FB923C;
+    --teal: #6B7280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Sarabun', sans-serif;
+    background: #0A0A0A;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(249,115,22,0.2);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: var(--ice); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5);
+    text-decoration: none; padding: 6px 12px; border-radius: 6px;
+    transition: all 0.2s; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .nav-links a:hover { background: rgba(249,115,22,0.12); color: var(--ice); }
+  .nav-badge {
+    font-size: 11px; background: rgba(249,115,22,0.15); color: var(--ice);
+    padding: 4px 12px; border-radius: 20px; font-weight: 600;
+    border: 1px solid rgba(249,115,22,0.4);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+    position: relative; overflow: hidden; padding: 80px 2rem 4rem;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(249,115,22,0.12) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem;
+    background: rgba(249,115,22,0.1); padding: 6px 20px; border-radius: 20px;
+    border: 1px solid rgba(249,115,22,0.35);
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800;
+    line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--ice); }
+  .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.5); margin-bottom: 3rem; font-weight: 300; }
+  .hero-kpis {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 700px; width: 100%;
+  }
+  .hero-kpi {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(249,115,22,0.2);
+    border-radius: 16px; padding: 1.5rem 1rem; text-align: center;
+    backdrop-filter: blur(8px);
+  }
+  .hero-kpi .val {
+    font-size: 1.8rem; font-weight: 800; color: var(--ice); display: block; line-height: 1;
+  }
+  .hero-kpi .label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero-kpi .sub { font-size: 12px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; padding: 5px 16px;
+    border-radius: 20px; margin-bottom: 1rem;
+  }
+  .tag-blue { background: rgba(249,115,22,0.12); color: var(--accent); border: 1px solid rgba(249,115,22,0.35); }
+  .tag-green { background: rgba(255,255,255,0.06); color: #d1d5db; border: 1px solid rgba(255,255,255,0.15); }
+  .tag-gold { background: rgba(251,146,60,0.12); color: var(--gold); border: 1px solid rgba(251,146,60,0.35); }
+  .tag-teal { background: rgba(255,255,255,0.06); color: #d1d5db; border: 1px solid rgba(255,255,255,0.15); }
+  .section-header h2 {
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800;
+    line-height: 1.2; color: var(--white);
+  }
+  .section-header p { font-size: 15px; color: rgba(255,255,255,0.5); margin-top: 0.75rem; }
+
+  /* CARD */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .card:hover { border-color: rgba(249,115,22,0.35); }
+
+  /* KPI GRID */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .kpi-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.75rem 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .kpi-card.blue::before { background: linear-gradient(90deg, #F97316, #EA580C); }
+  .kpi-card.green::before { background: linear-gradient(90deg, #9ca3af, #6b7280); }
+  .kpi-card.gold::before { background: linear-gradient(90deg, #FB923C, #F97316); }
+  .kpi-card.teal::before { background: linear-gradient(90deg, #6B7280, #4B5563); }
+  .kpi-card .kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 0.75rem; }
+  .kpi-card .kpi-val { font-size: 2.2rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .kpi-card .kpi-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 0.5rem; }
+  .kpi-card .kpi-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 12px; margin-top: 0.5rem;
+  }
+  .badge-up { background: rgba(39,174,96,0.2); color: #2ecc71; }
+  .badge-down { background: rgba(231,76,60,0.2); color: #e74c3c; }
+  .badge-neutral { background: rgba(249,115,22,0.2); color: var(--accent); }
+
+  /* CHART */
+  .chart-wrap { position: relative; height: 360px; }
+  .chart-wrap-sm { position: relative; height: 280px; }
+
+  /* GRID 2 */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .data-table td {
+    font-size: 14px; padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.8);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .data-table .num { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .data-table .total td { font-weight: 700; color: var(--white); border-top: 1px solid rgba(249,115,22,0.25); }
+
+  /* PROGRESS BAR */
+  .prog-wrap { display: flex; flex-direction: column; gap: 1rem; }
+  .prog-item {}
+  .prog-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .prog-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
+  .prog-val { font-size: 13px; font-weight: 700; color: var(--white); }
+  .prog-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 8px; transition: width 1s ease; }
+
+  /* CREDIT TERM PILLS */
+  .ct-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+  .ct-pill {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1rem; text-align: center;
+  }
+  .ct-pill .ct-name { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+  .ct-pill .ct-val { font-size: 1.2rem; font-weight: 800; color: var(--white); margin: 4px 0; }
+  .ct-pill .ct-pct { font-size: 12px; font-weight: 600; }
+
+  /* SAVE CARD */
+  .save-hero {
+    background: linear-gradient(135deg, rgba(39,174,96,0.1) 0%, rgba(249,115,22,0.08) 100%);
+    border: 1px solid rgba(39,174,96,0.25); border-radius: 20px;
+    padding: 3rem 2rem; text-align: center; margin-bottom: 2rem;
+  }
+  .save-hero .big { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; color: #2ecc71; line-height: 1; }
+  .save-hero .sub-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+
+  /* NEG TABLE */
+  .neg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .neg-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden;
+  }
+  .neg-card .neg-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.75rem; }
+  .neg-card .neg-order { font-size: 1.5rem; font-weight: 800; color: var(--white); }
+  .neg-card .neg-save { font-size: 1rem; font-weight: 600; color: #2ecc71; margin-top: 0.25rem; }
+  .neg-card .neg-rate {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-size: 1.4rem; font-weight: 800;
+  }
+
+  /* SUMMARY SECTION */
+  .summary-bg {
+    background: linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%);
+    border-top: 1px solid rgba(249,115,22,0.15);
+  }
+  .takeaway-list { display: flex; flex-direction: column; gap: 1rem; }
+  .takeaway {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 1.25rem 1.5rem;
+  }
+  .takeaway-icon { font-size: 1.3rem; min-width: 28px; }
+  .takeaway-text { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  .takeaway-text strong { color: var(--white); font-weight: 700; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px; color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+  }
+
+  /* SECTION ALTERNATING */
+  .section-alt { background: rgba(255,255,255,0.02); }
+
+  /* AGENDA */
+  .agenda-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .agenda-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start;
+  }
+  .agenda-num {
+    font-size: 2rem; font-weight: 800; color: rgba(249,115,22,0.5);
+    line-height: 1; min-width: 40px;
+  }
+  .agenda-title { font-size: 1rem; font-weight: 700; color: var(--white); }
+  .agenda-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 0.4rem; line-height: 1.5; }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4, .neg-grid, .agenda-grid { grid-template-columns: 1fr; }
+    .hero-kpis { grid-template-columns: 1fr; }
+    .ct-grid { grid-template-columns: repeat(2, 1fr); }
+    nav .nav-links { display: none; }
+  }
+
+  /* SCROLL */
+  html { scroll-behavior: smooth; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">ROBOT SYSTEM CO.,LTD.</span>
+  <div class="nav-links">
+    <a href="#agenda">Agenda</a>
+    <a href="#value-order">Value Order</a>
+    <a href="#credit">Credit Term</a>
+    <a href="#cost-saving">Cost Saving</a>
+    <a href="#negotiation">Negotiation</a>
+    <a href="#summary">Summary</a>
+  </div>
+  <span class="nav-badge">Jan–Feb 2026</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">Procurement Report · Confidential</div>
+  <h1>Purchasing<br><span>Jan – Feb 2026</span></h1>
+  <p class="hero-sub">Purchasing Department · ฝ่ายจัดซื้อ · Robot System Co.,Ltd.</p>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <span class="val">฿14.14M</span>
+      <span class="label">Total Jan+Feb</span>
+      <span class="sub">มูลค่าการสั่งซื้อรวม</span>
+    </div>
+    <div class="hero-kpi">
+      <span class="val">+88.6%</span>
+      <span class="label">Feb Growth vs Jan</span>
+      <span class="sub">การเติบโตเดือนกุมภาพันธ์</span>
+    </div>
+    <div class="hero-kpi">
+      <span class="val">฿610,646</span>
+      <span class="label">Total Saving</span>
+      <span class="sub">ประหยัดได้ทั้งสิ้น (4.74%)</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-blue">Agenda</span>
+      <h2>สารบัญรายงาน</h2>
+      <p>Procurement Report — January to February 2026</p>
+    </div>
+    <div class="agenda-grid">
+      <div class="agenda-item">
+        <div class="agenda-num">01</div>
+        <div>
+          <div class="agenda-title">Value Order (มูลค่าการสั่งซื้อ)</div>
+          <div class="agenda-sub">ยอดการสั่งซื้อ Jan+Feb แยกตามกลุ่มสินค้า<br>Product Group Breakdown</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">02</div>
+        <div>
+          <div class="agenda-title">Value Order vs Credit Terms</div>
+          <div class="agenda-sub">เปรียบเทียบยอดซื้อกับเงื่อนไขการชำระเงิน<br>Top Credit Term Breakdown</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">03</div>
+        <div>
+          <div class="agenda-title">Cost Saving (การประหยัดต้นทุน)</div>
+          <div class="agenda-sub">การประหยัดจากสินค้า Std Parts ที่สั่งซ้ำ<br>Standard Parts Cost Saving</div>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">04</div>
+        <div>
+          <div class="agenda-title">Price Negotiation (การต่อรองราคา)</div>
+          <div class="agenda-sub">ผลการต่อรองราคาทุกกลุ่มสินค้า<br>All Group Price Negotiation Results</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VALUE ORDER -->
+<section id="value-order" class="section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-blue">01 — Value Order</span>
+      <h2>มูลค่าการสั่งซื้อ Jan – Feb 2026</h2>
+      <p>Purchase Value by Product Group · ยอดซื้อแยกตามกลุ่มสินค้า</p>
+    </div>
+
+    <!-- KPI row -->
+    <div class="kpi-grid" style="margin-bottom:2rem;">
+      <div class="kpi-card blue">
+        <div class="kpi-label">January 2026</div>
+        <div class="kpi-val">฿4.90M</div>
+        <div class="kpi-sub">4,899,494 Baht</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">February 2026</div>
+        <div class="kpi-val">฿9.24M</div>
+        <div class="kpi-sub">9,242,522 Baht</div>
+        <span class="kpi-badge badge-up">▲ +88.6% vs Jan</span>
+      </div>
+      <div class="kpi-card gold">
+        <div class="kpi-label">Total Jan + Feb</div>
+        <div class="kpi-val">฿14.14M</div>
+        <div class="kpi-sub">14,142,016 Baht</div>
+      </div>
+    </div>
+
+    <!-- Charts row -->
+    <div class="grid-2" style="margin-bottom:2rem;">
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Jan vs Feb — By Product Group
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="chartProductGroup"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          February 2026 — Top 5 Categories
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="chartFebPie"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 3 Feb -->
+    <div class="card">
+      <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+        Top 3 กลุ่มสินค้า — February 2026
+      </h3>
+      <div class="grid-3">
+        <div style="background:rgba(249,115,22,0.07);border:1px solid rgba(249,115,22,0.25);border-radius:14px;padding:1.5rem;text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;color:var(--gold);">🥇</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-top:0.5rem;text-transform:uppercase;letter-spacing:1px;">Mechanic (Std Parts)</div>
+          <div style="font-size:1.6rem;font-weight:800;color:var(--white);margin-top:0.5rem;">฿6,348,702</div>
+          <div style="font-size:12px;color:#2ecc71;margin-top:4px;font-weight:600;">68.7% of Feb spend</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.5rem;text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;">🥈</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-top:0.5rem;text-transform:uppercase;letter-spacing:1px;">Electrical (Std Parts)</div>
+          <div style="font-size:1.6rem;font-weight:800;color:var(--white);margin-top:0.5rem;">฿1,476,997</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;font-weight:600;">16.0% of Feb spend</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.5rem;text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;">🥉</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-top:0.5rem;text-transform:uppercase;letter-spacing:1px;">Outsourced (MTO)</div>
+          <div style="font-size:1.6rem;font-weight:800;color:var(--white);margin-top:0.5rem;">฿796,740</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;font-weight:600;">8.6% of Feb spend</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CREDIT TERMS -->
+<section id="credit">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-teal">02 — Credit Terms</span>
+      <h2>Value Order vs Credit Terms</h2>
+      <p>มูลค่ายอดซื้อเทียบ Credit Term รายเดือน</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:2rem;">
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Credit Term Breakdown — Jan vs Feb
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="chartCredit"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Jan+Feb Combined Credit Mix
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="chartCreditPie"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Credit Terms -->
+    <div class="card">
+      <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+        Top Credit Terms — Jan+Feb Combined
+      </h3>
+      <div class="ct-grid">
+        <div class="ct-pill" style="border-color:rgba(249,115,22,0.35);background:rgba(249,115,22,0.07);">
+          <div class="ct-name">#1 Credit 30d</div>
+          <div class="ct-val">฿9,680,806</div>
+          <div class="ct-pct" style="color:#F97316;">68.5% of Total</div>
+        </div>
+        <div class="ct-pill">
+          <div class="ct-name">#2 Credit 60d</div>
+          <div class="ct-val">฿3,734,679</div>
+          <div class="ct-pct" style="color:rgba(255,255,255,0.5);">26.4% of Total</div>
+        </div>
+        <div class="ct-pill">
+          <div class="ct-name">#3 Credit 0d</div>
+          <div class="ct-val">฿670,764</div>
+          <div class="ct-pct" style="color:rgba(255,255,255,0.5);">4.7% of Total</div>
+        </div>
+      </div>
+
+      <!-- detail table -->
+      <table class="data-table" style="margin-top:2rem;">
+        <thead>
+          <tr>
+            <th>Credit Term</th>
+            <th class="num">January (฿)</th>
+            <th class="num">February (฿)</th>
+            <th class="num">Total (฿)</th>
+            <th class="num">% of Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Credit 30 days</td>
+            <td class="num">2,806,018</td>
+            <td class="num">6,874,788</td>
+            <td class="num" style="color:#F97316;font-weight:700;">9,680,806</td>
+            <td class="num" style="color:#2ecc71;">68.5%</td>
+          </tr>
+          <tr>
+            <td>Credit 60 days</td>
+            <td class="num">1,797,948</td>
+            <td class="num">1,936,731</td>
+            <td class="num">3,734,679</td>
+            <td class="num">26.4%</td>
+          </tr>
+          <tr>
+            <td>Credit 0 days (cash)</td>
+            <td class="num">278,521</td>
+            <td class="num">392,243</td>
+            <td class="num">670,764</td>
+            <td class="num">4.7%</td>
+          </tr>
+          <tr>
+            <td>Credit 45 days</td>
+            <td class="num">7,360</td>
+            <td class="num">22,800</td>
+            <td class="num">30,160</td>
+            <td class="num">0.2%</td>
+          </tr>
+          <tr>
+            <td>Credit 7 days</td>
+            <td class="num">9,647</td>
+            <td class="num">—</td>
+            <td class="num">9,647</td>
+            <td class="num">0.1%</td>
+          </tr>
+          <tr>
+            <td>Credit 15 days</td>
+            <td class="num">—</td>
+            <td class="num">15,960</td>
+            <td class="num">15,960</td>
+            <td class="num">0.1%</td>
+          </tr>
+          <tr class="total">
+            <td><strong>TOTAL</strong></td>
+            <td class="num">4,899,494</td>
+            <td class="num">9,242,522</td>
+            <td class="num">14,142,016</td>
+            <td class="num">100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COST SAVING -->
+<section id="cost-saving" class="section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-green">03 — Cost Saving</span>
+      <h2>Cost Saving — Standard Parts</h2>
+      <p>การประหยัดจากสินค้า Std Parts ที่สั่งซ้ำ · Jan–Feb 2026</p>
+    </div>
+
+    <div class="save-hero">
+      <div style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.75rem;">Total Saving — Standard Parts</div>
+      <div class="big">฿19,938</div>
+      <div class="sub-label">Current ฿300,572 → New ฿280,634 · Saving Rate 6.63%</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Monthly Cost Saving Breakdown
+        </h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th class="num">Current Price (฿)</th>
+              <th class="num">New Price (฿)</th>
+              <th class="num">Save (฿)</th>
+              <th class="num">% Save</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>January</td>
+              <td class="num">77,604</td>
+              <td class="num">72,692</td>
+              <td class="num" style="color:#2ecc71;font-weight:700;">4,912</td>
+              <td class="num" style="color:#2ecc71;">6.33%</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td class="num">222,968</td>
+              <td class="num">207,943</td>
+              <td class="num" style="color:#2ecc71;font-weight:700;">15,025</td>
+              <td class="num" style="color:#2ecc71;">6.74%</td>
+            </tr>
+            <tr class="total">
+              <td><strong>TOTAL</strong></td>
+              <td class="num">300,572</td>
+              <td class="num">280,634</td>
+              <td class="num" style="color:#2ecc71;font-weight:800;">19,938</td>
+              <td class="num" style="color:#2ecc71;">6.63%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Price Comparison — Before vs After
+        </h3>
+        <div class="chart-wrap-sm">
+          <canvas id="chartCostSaving"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICE NEGOTIATION -->
+<section id="negotiation">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-gold">04 — Price Negotiation</span>
+      <h2>Price Negotiation Summary</h2>
+      <p>สรุปผลการต่อรองราคา — ทุกกลุ่ม · Jan–Feb 2026</p>
+    </div>
+
+    <!-- Grand total -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem;">
+      <div class="kpi-card teal">
+        <div class="kpi-label">Total Order Value</div>
+        <div class="kpi-val">฿12.59M</div>
+        <div class="kpi-sub">12,585,276 Baht</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Total Save Amount</div>
+        <div class="kpi-val">฿590,708</div>
+        <div class="kpi-sub">4 Product Groups</div>
+      </div>
+      <div class="kpi-card gold">
+        <div class="kpi-label">Avg. Saving Rate</div>
+        <div class="kpi-val">4.74%</div>
+        <div class="kpi-sub">All Groups Combined</div>
+      </div>
+    </div>
+
+    <!-- 4 groups -->
+    <div class="neg-grid" style="margin-bottom:2rem;">
+      <div class="neg-card" style="border-color:rgba(249,115,22,0.25);background:rgba(249,115,22,0.05);">
+        <div class="neg-title">Standard Parts</div>
+        <div class="neg-rate" style="color:#F97316;">4.69%</div>
+        <div class="neg-order">฿8,821,560</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Order Value</div>
+        <div class="neg-save">฿414,075 saved</div>
+      </div>
+      <div class="neg-card" style="border-color:rgba(243,156,18,0.25);background:rgba(243,156,18,0.05);">
+        <div class="neg-title">Outsourced (MTO)</div>
+        <div class="neg-rate" style="color:var(--gold);">2.07%</div>
+        <div class="neg-order">฿3,404,399</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Order Value</div>
+        <div class="neg-save" style="color:#f39c12;">฿70,470 saved</div>
+      </div>
+      <div class="neg-card" style="border-color:rgba(39,174,96,0.4);background:rgba(39,174,96,0.08);grid-column:span 2;">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:flex-start;">
+          <div>
+            <div class="neg-title">🏆 Engineering Fee &amp; Service — Highest Saving Rate!</div>
+            <div class="neg-order">฿297,900</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Order Value</div>
+            <div class="neg-save" style="font-size:1.1rem;">฿105,000 saved</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:3.5rem;font-weight:800;color:#2ecc71;line-height:1;">35.25%</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Saving Rate</div>
+          </div>
+        </div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-title">Supplies</div>
+        <div class="neg-rate" style="color:rgba(255,255,255,0.4);">1.89%</div>
+        <div class="neg-order">฿61,417</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Order Value</div>
+        <div class="neg-save" style="color:rgba(255,255,255,0.5);">฿1,163 saved</div>
+      </div>
+      <div class="neg-card" style="background:rgba(107,114,128,0.05);border-color:rgba(107,114,128,0.25);">
+        <div class="neg-title">Grand Total — All Groups</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:0.5rem;">
+          <div>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--white);">฿590,708</div>
+            <div style="font-size:12px;color:#2ecc71;font-weight:600;">Total Saved · 4.74% avg rate</div>
+          </div>
+          <div style="font-size:2.5rem;font-weight:800;color:#d1d5db;">4.74%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+      <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+        Saving by Group — Visual Comparison
+      </h3>
+      <div class="grid-2" style="gap:2rem;">
+        <div class="chart-wrap">
+          <canvas id="chartNegBar"></canvas>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="chartNegRate"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONSOLIDATED -->
+<section class="section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-green">Consolidated Saving</span>
+      <h2>สรุปผลการประหยัดรวมทุกหมวด</h2>
+      <p>Consolidated Saving Summary — All Categories · Jan–Feb 2026</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
+      <div>
+        <div class="save-hero" style="margin-bottom:1.5rem;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.75rem;">Grand Total Saving</div>
+          <div class="big" style="font-size:clamp(2.5rem,5vw,4rem);">฿610,646</div>
+          <div class="sub-label">Cost Saving + Price Negotiation · Overall Rate 4.74%</div>
+        </div>
+        <div class="card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th class="num">Save (฿)</th>
+                <th class="num">% Save</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cost Saving (Std Parts)</td>
+                <td class="num" style="color:#2ecc71;">19,938</td>
+                <td class="num" style="color:#2ecc71;">6.63%</td>
+              </tr>
+              <tr>
+                <td>Std Parts Negotiation</td>
+                <td class="num" style="color:#F97316;">414,075</td>
+                <td class="num">4.69%</td>
+              </tr>
+              <tr>
+                <td>Outsourced Negotiation</td>
+                <td class="num">70,470</td>
+                <td class="num">2.07%</td>
+              </tr>
+              <tr>
+                <td>Service Negotiation</td>
+                <td class="num" style="color:#2ecc71;font-weight:700;">105,000</td>
+                <td class="num" style="color:#2ecc71;font-weight:700;">35.25% 🏆</td>
+              </tr>
+              <tr>
+                <td>Supplies Negotiation</td>
+                <td class="num">1,163</td>
+                <td class="num">1.89%</td>
+              </tr>
+              <tr class="total">
+                <td><strong>TOTAL</strong></td>
+                <td class="num" style="color:#2ecc71;font-weight:800;">610,646</td>
+                <td class="num" style="color:#2ecc71;">4.74%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;">
+          Saving Distribution
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="chartConsolidated"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUMMARY -->
+<section class="summary-bg" id="summary">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag tag-blue">Summary</span>
+      <h2>Key Takeaways</h2>
+      <p>สรุปสาระสำคัญ — Procurement Report Jan–Feb 2026</p>
+    </div>
+
+    <div class="takeaway-list">
+      <div class="takeaway">
+        <div class="takeaway-icon">📈</div>
+        <div class="takeaway-text">
+          <strong>Feb Purchase ฿9.24M — Growth +88.6% vs Jan (฿4.90M)</strong><br>
+          ยอดการสั่งซื้อเดือนกุมภาพันธ์เพิ่มขึ้น 88.6% จากเดือนมกราคม ขับเคลื่อนหลักโดยกลุ่ม Mechanic Std Parts
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">🏆</div>
+        <div class="takeaway-text">
+          <strong>Highest Feb Category: Mechanic Std Parts — ฿6.35M (68.7% of Feb spend)</strong><br>
+          สินค้ากลุ่ม Mechanic (Standard Parts) เป็นกลุ่มที่มีมูลค่าการสั่งซื้อสูงสุดในเดือนกุมภาพันธ์
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">📋</div>
+        <div class="takeaway-text">
+          <strong>Feb Credit 30d: ฿6,874,788 — 74.4% of Feb total purchases</strong><br>
+          เงื่อนไขการชำระเงิน Credit 30 วันคิดเป็น 74.4% ของยอดซื้อทั้งหมดในเดือนกุมภาพันธ์
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">💰</div>
+        <div class="takeaway-text">
+          <strong>Feb Cost Saving (Std Parts): ฿15,025 — Saving Rate 6.74%</strong><br>
+          ประหยัดได้จาก Standard Parts ซ้ำ ฿15,025 ในเดือนกุมภาพันธ์ (อัตราประหยัด 6.74%)
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">🤝</div>
+        <div class="takeaway-text">
+          <strong>Price Negotiation Total: ฿590,708 saved Jan–Feb across 4 groups</strong><br>
+          การต่อรองราคาทั้ง 4 กลุ่มสินค้าสามารถประหยัดได้ทั้งสิ้น ฿590,708 ตลอด Jan–Feb 2026
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">⭐</div>
+        <div class="takeaway-text">
+          <strong>Grand Total Saving Jan–Feb: ฿610,646 — 4.74% overall rate</strong><br>
+          ยอดประหยัดรวมทุกหมวดหมู่ (Cost Saving + Price Negotiation) = ฿610,646 คิดเป็นอัตราประหยัด 4.74%
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ROBOT SYSTEM CO.,LTD. · Procurement Report · January–February 2026 · Purchasing Department · Confidential
+</footer>
+
+<script>
+Chart.defaults.color = 'rgba(255,255,255,0.5)';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'Inter', 'Sarabun', sans-serif";
+
+const categories = [
+  'Mechanic\n(Std Parts)', 'Outsourced\n(MTO)', 'Electrical\n(Std Parts)',
+  'Robot', 'Eng. Fee\n& Service', 'Asset', 'Office\nSupplies',
+  'FG', 'Camera/\nVision', 'Materials', 'Transportation',
+  'Factory\nSupplies', 'Repair &\nService', 'Powder/\nPlating'
+];
+const janVals = [324400, 2607659, 671461, 890000, 164500, 0, 5141, 29205, 67262, 20624, 7700, 42493, 33950, 35100];
+const febVals = [6348702, 796740, 1476997, 0, 133400, 118846, 94210, 83262, 24056, 60330, 57000, 13783, 18500, 16695];
+
+// Chart 1: Product Group Bar
+new Chart(document.getElementById('chartProductGroup'), {
+  type: 'bar',
+  data: {
+    labels: categories,
+    datasets: [
+      { label: 'January', data: janVals, backgroundColor: 'rgba(115,115,115,0.45)', borderColor: 'rgba(160,160,160,0.6)', borderWidth: 1, borderRadius: 4 },
+      { label: 'February', data: febVals, backgroundColor: 'rgba(249,115,22,0.75)', borderColor: 'rgba(249,115,22,0.95)', borderWidth: 1, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' }, tooltip: {
+      callbacks: { label: ctx => ctx.dataset.label + ': ฿' + ctx.raw.toLocaleString() }
+    }},
+    scales: {
+      x: { ticks: { font: { size: 9 } } },
+      y: { ticks: { callback: v => '฿' + (v/1000).toFixed(0) + 'K' } }
+    }
+  }
+});
+
+// Chart 2: Feb Top 5 Doughnut
+const febTop5Labels = ['Mechanic (Std)', 'Electrical (Std)', 'Outsourced (MTO)', 'Eng.Fee & Svc', 'Others'];
+const febTop5Vals = [6348702, 1476997, 796740, 133400, 9242522 - 6348702 - 1476997 - 796740 - 133400];
+new Chart(document.getElementById('chartFebPie'), {
+  type: 'doughnut',
+  data: {
+    labels: febTop5Labels,
+    datasets: [{ data: febTop5Vals,
+      backgroundColor: ['rgba(249,115,22,0.9)', 'rgba(251,146,60,0.7)', 'rgba(160,160,160,0.6)', 'rgba(200,200,200,0.45)', 'rgba(255,255,255,0.12)'],
+      borderWidth: 2, borderColor: 'rgba(10,10,10,0.85)'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ฿' + ctx.raw.toLocaleString() } }
+    }
+  }
+});
+
+// Chart 3: Credit Term Bar
+new Chart(document.getElementById('chartCredit'), {
+  type: 'bar',
+  data: {
+    labels: ['Credit 0d', 'Credit 7d', 'Credit 15d', 'Credit 30d', 'Credit 45d', 'Credit 60d'],
+    datasets: [
+      { label: 'January', data: [278521, 9647, 0, 2806018, 7360, 1797948], backgroundColor: 'rgba(115,115,115,0.45)', borderRadius: 4 },
+      { label: 'February', data: [392243, 0, 15960, 6874788, 22800, 1936731], backgroundColor: 'rgba(249,115,22,0.75)', borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' }, tooltip: {
+      callbacks: { label: ctx => ctx.dataset.label + ': ฿' + ctx.raw.toLocaleString() }
+    }},
+    scales: { y: { ticks: { callback: v => '฿' + (v/1000000).toFixed(1) + 'M' } } }
+  }
+});
+
+// Chart 4: Credit Pie
+new Chart(document.getElementById('chartCreditPie'), {
+  type: 'pie',
+  data: {
+    labels: ['Credit 30d (68.5%)', 'Credit 60d (26.4%)', 'Credit 0d (4.7%)', 'Others (0.4%)'],
+    datasets: [{ data: [9680806, 3734679, 670764, 55767],
+      backgroundColor: ['rgba(249,115,22,0.9)', 'rgba(160,160,160,0.6)', 'rgba(251,146,60,0.65)', 'rgba(255,255,255,0.15)'],
+      borderWidth: 2, borderColor: 'rgba(10,10,10,0.85)'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ฿' + ctx.raw.toLocaleString() } }
+    }
+  }
+});
+
+// Chart 5: Cost Saving
+new Chart(document.getElementById('chartCostSaving'), {
+  type: 'bar',
+  data: {
+    labels: ['January', 'February', 'Total'],
+    datasets: [
+      { label: 'Current Price', data: [77604, 222968, 300572], backgroundColor: 'rgba(231,76,60,0.5)', borderRadius: 6 },
+      { label: 'New Price', data: [72692, 207943, 280634], backgroundColor: 'rgba(39,174,96,0.7)', borderRadius: 6 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' }, tooltip: {
+      callbacks: { label: ctx => ctx.dataset.label + ': ฿' + ctx.raw.toLocaleString() }
+    }},
+    scales: { y: { ticks: { callback: v => '฿' + (v/1000).toFixed(0) + 'K' } } }
+  }
+});
+
+// Chart 6: Negotiation Save Amount
+new Chart(document.getElementById('chartNegBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Std Parts', 'Outsourced', 'Eng. Fee & Svc', 'Supplies'],
+    datasets: [{
+      label: 'Save Amount (฿)',
+      data: [414075, 70470, 105000, 1163],
+      backgroundColor: ['rgba(249,115,22,0.8)', 'rgba(180,180,180,0.6)', 'rgba(251,146,60,0.7)', 'rgba(100,100,100,0.45)'],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: {
+      callbacks: { label: ctx => '฿' + ctx.raw.toLocaleString() }
+    }},
+    scales: { x: { ticks: { callback: v => '฿' + (v/1000).toFixed(0) + 'K' } } }
+  }
+});
+
+// Chart 7: Saving Rate
+new Chart(document.getElementById('chartNegRate'), {
+  type: 'bar',
+  data: {
+    labels: ['Std Parts', 'Outsourced', 'Eng. Fee & Svc', 'Supplies'],
+    datasets: [{
+      label: 'Saving Rate (%)',
+      data: [4.69, 2.07, 35.25, 1.89],
+      backgroundColor: ['rgba(249,115,22,0.8)', 'rgba(180,180,180,0.6)', 'rgba(251,146,60,0.7)', 'rgba(100,100,100,0.45)'],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: {
+      callbacks: { label: ctx => ctx.raw + '%' }
+    }},
+    scales: { y: { ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// Chart 8: Consolidated Doughnut
+new Chart(document.getElementById('chartConsolidated'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Std Parts Neg. ฿414K', 'Service Neg. ฿105K', 'Outsourced Neg. ฿70K', 'Cost Save ฿20K', 'Supplies ฿1K'],
+    datasets: [{ data: [414075, 105000, 70470, 19938, 1163],
+      backgroundColor: ['rgba(249,115,22,0.9)', 'rgba(251,146,60,0.7)', 'rgba(160,160,160,0.6)', 'rgba(200,200,200,0.45)', 'rgba(100,100,100,0.35)'],
+      borderWidth: 2, borderColor: 'rgba(10,10,10,0.85)'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ฿' + ctx.raw.toLocaleString() } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
